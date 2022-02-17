@@ -29,8 +29,8 @@ def prepare_data():
     df.loc[df['label'] == False, 'Product'] = 'Others'
     count_val = df.groupby("Product")["Product"].count().sort_values(ascending=False)
     df['category_id'] = df['Product'].factorize()[0]
-    df = df[['Consumer complaint narrative', 'category_id']]
-    df.columns = ['Consumer_complaint_narrative', 'category_id']
+    df = df[['Consumer complaint narrative', 'Product', 'category_id']]
+    df.columns = ['Consumer_complaint_narrative', 'Product', 'category_id']
     pd.to_pickle(df, 'data/dataset.pickle')
 
 
@@ -40,8 +40,9 @@ def plot_data(df):
     :param df: dataframe containing all the data and column for histogram
     :type df: dataframe
     """
-    fig = plt.figure(figsize=(8, 6))
-    plt.hist(df.category_id, color='blue',rwidth=0.8)
+    fig = plt.figure(figsize=(16, 20))
+    plt.hist(df.Product, color='blue',rwidth=0.8)
+    plt.xticks(rotation=90)
     plt.xlabel("Category ID")
     plt.ylabel("Number of Complaints")
     plt.title("Number of Complaints for every category")
